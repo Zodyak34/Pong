@@ -7,6 +7,7 @@ public class Window extends JFrame implements Runnable {
 
     Graphics2D g2;
     KL keyListener = new KL();
+    Rect playerOne, ai, ball;
 
     public Window() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -16,21 +17,19 @@ public class Window extends JFrame implements Runnable {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         g2 = (Graphics2D)this.getGraphics();
         this.addKeyListener(keyListener);
+
+        playerOne = new Rect(Constants.HORIZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
+        ai = new Rect(Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH - Constants.HORIZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
+        ball = new Rect(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, Constants.BALL_CIRC, Constants.BALL_CIRC, Constants.PADDLE_COLOR);
     }
 
     public void update(double dt) {
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 
-        if (keyListener.isKeyPressed(KeyEvent.VK_UP)) {
-            System.out.println("The user is pressing the up arrow");
-        } else if (keyListener.isKeyPressed(KeyEvent.VK_DOWN)) {
-            System.out.println("The user is pressing the down arrow");
-        }  else if (keyListener.isKeyPressed(KeyEvent.VK_LEFT)) {
-            System.out.println("The user is pressing the left arrow");
-        }  else if (keyListener.isKeyPressed(KeyEvent.VK_RIGHT)) {
-            System.out.println("The user is pressing the right arrow");
-        }
+        playerOne.draw(g2);
+        ai.draw(g2);
+        ball.draw(g2);
     }
 
     public void run() {
