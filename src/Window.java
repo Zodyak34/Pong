@@ -5,7 +5,7 @@ public class Window extends JFrame implements Runnable {
 
     public Graphics2D g2;
     public KL keyListener = new KL();
-    public Rect playerOne, ai, ballRect;
+    public Rect playerOne, ai, ballRect, divider;
     public PlayerController pc;
     public AIController aiController;
     public Ball ball;
@@ -21,10 +21,12 @@ public class Window extends JFrame implements Runnable {
         Constants.toolBarHeight = this.getInsets().top;
         Constants.insetBottom = this.getInsets().bottom;
 
-        playerOne = new Rect(Constants.HORIZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
+        divider = new Rect(Constants.SCREEN_WIDTH / 2.0, 0, Constants.DIV_WIDTH, Constants.SCREEN_HEIGHT, Constants.PADDLE_COLOR);
+
+        playerOne = new Rect(Constants.HORIZ_PADDING, Constants.SCREEN_HEIGHT / 2.0, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
         pc = new PlayerController(playerOne, keyListener);
 
-        ai = new Rect(Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH - Constants.HORIZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
+        ai = new Rect(Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH - Constants.HORIZ_PADDING, Constants.SCREEN_HEIGHT / 2.0, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
 
         ballRect = new Rect(Constants.SCREEN_WIDTH / 2.0, Constants.SCREEN_HEIGHT / 2.0, Constants.BALL_CIRC, Constants.BALL_CIRC, Constants.PADDLE_COLOR);
         ball = new Ball(ballRect, playerOne, ai);
@@ -47,6 +49,7 @@ public class Window extends JFrame implements Runnable {
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
+        divider.draw(g2);
         playerOne.draw(g2);
         ai.draw(g2);
         ballRect.draw(g2);

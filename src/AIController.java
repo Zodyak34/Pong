@@ -9,11 +9,12 @@ public class AIController {
 
     public void update(double dt) {
         playerController.update(dt);
-
-        if (ball.y < playerController.rect.y) {
-            playerController.moveUp(dt);
-        } else if (ball.y + ball.height > playerController.rect.y + playerController.rect.height) {
-            playerController.moveDown(dt);
+        if (ball.x >= Constants.SCREEN_WIDTH / 2.0) {
+            if (ball.y < playerController.rect.y) {
+                playerController.moveUp(dt);
+            } else if (ball.y + ball.height > playerController.rect.y + playerController.rect.height) {
+                playerController.moveDown(dt);
+            }
         }
     }
 }
