@@ -11,7 +11,10 @@ public class Constants {
     public static final double BALL_CIRC = 10.0;
     public static final double HORIZ_PADDING = 30.0;
     public static final double PADDLE_SPEED = 250.0;
+    public static final double BALL_SPEED = 200.0;
 
     public static double toolBarHeight;
     public static double insetBottom;
+
+    public static final double MAX_ANGLE = 70;
 }
