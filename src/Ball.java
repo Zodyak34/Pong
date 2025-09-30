@@ -3,8 +3,8 @@ public class Ball {
     public Rect leftPaddle, rightPaddle;
 
     //velocity x and y
-    private double vy = 300.0;
-    private double vx = -150.0;
+    private double vy = 75.0;
+    private double vx = -175.0;
 
     public Ball(Rect rect, Rect leftPaddle, Rect rightPaddle) {
         this.rect = rect;
@@ -20,7 +20,7 @@ public class Ball {
                     this.rect.y >= this.leftPaddle.y &&
                     this.rect.y <= this.leftPaddle.y + this.leftPaddle.height) {
                 this.vx *= -1;
-                this.vy *= -1;
+                //this.vy *= -1;
             } else if (this.rect.x + this.rect.width < this.leftPaddle.x) {
                 System.out.println("You have lost a point");
                 this.vx *= 0;
@@ -32,7 +32,7 @@ public class Ball {
                     this.rect.y >= this.rightPaddle.y &&
                     this.rect.y <= this.rightPaddle.y + this.rightPaddle.height) {
                 this.vx *= -1;
-                this.vy *= -1;
+                //this.vy *= -1;
             } else if (this.rect.x + this.rect.width > this.rightPaddle.x + this.rightPaddle.width) {
                 System.out.println("AI has lost a point");
                 this.vx *= 0;
@@ -41,7 +41,7 @@ public class Ball {
         }
 
         if (vy > 0) {
-            if (this.rect.y + this.rect.height > Constants.SCREEN_HEIGHT) {
+            if (this.rect.y + this.rect.height > Constants.SCREEN_HEIGHT - Constants.insetBottom) {
                 this.vy *= -1;
             }
         } else if (vy < 0) {
