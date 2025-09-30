@@ -1,13 +1,13 @@
 import javax.swing.JFrame;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class Window extends JFrame implements Runnable {
 
     public Graphics2D g2;
     public KL keyListener = new KL();
-    public Rect playerOne, ai, ball;
+    public Rect playerOne, ai, ballRect;
     public PlayerController pc;
+    public Ball ball;
 
     public Window() {
         this.setSize(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
@@ -24,7 +24,8 @@ public class Window extends JFrame implements Runnable {
         pc = new PlayerController(playerOne, keyListener);
 
         ai = new Rect(Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH - Constants.HORIZ_PADDING, 40, Constants.PADDLE_WIDTH, Constants.PADDLE_HEIGHT, Constants.PADDLE_COLOR);
-        ball = new Rect(Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2, Constants.BALL_CIRC, Constants.BALL_CIRC, Constants.PADDLE_COLOR);
+        ballRect = new Rect(Constants.SCREEN_WIDTH / 2.0, Constants.SCREEN_HEIGHT / 2.0, Constants.BALL_CIRC, Constants.BALL_CIRC, Constants.PADDLE_COLOR);
+        ball = new Ball(ballRect, playerOne, ai);
     }
 
     public void update(double dt) {
@@ -34,6 +35,7 @@ public class Window extends JFrame implements Runnable {
         g2.drawImage(dbImage, 0, 0, this);
 
         pc.update(dt);
+        ball.update(dt);
     }
 
     public void draw(Graphics g) {
@@ -42,7 +44,7 @@ public class Window extends JFrame implements Runnable {
         g2.fillRect(0, 0, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
         playerOne.draw(g2);
         ai.draw(g2);
-        ball.draw(g2);
+        ballRect.draw(g2);
     }
 
     public void run() {
