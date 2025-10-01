@@ -1,18 +1,20 @@
 public class AIController {
     public PlayerController playerController;
-    public Rect ball;
+    public Rect ballRect;
+    public Ball ball;
 
-    public AIController(PlayerController playerController, Rect ball) {
+    public AIController(PlayerController playerController, Rect rectBall, Ball ball) {
         this.playerController = playerController;
+        this.ballRect = rectBall;
         this.ball = ball;
     }
 
     public void update(double dt) {
         playerController.update(dt);
-        if (ball.x >= Constants.SCREEN_WIDTH / 2.0) {
-            if (ball.y < playerController.rect.y) {
+        if (ball.vx > 0) {
+            if (ballRect.y < playerController.rect.y) {
                 playerController.moveUp(dt);
-            } else if (ball.y + ball.height > playerController.rect.y + playerController.rect.height) {
+            } else if (ballRect.y + ballRect.height > playerController.rect.y + playerController.rect.height) {
                 playerController.moveDown(dt);
             }
         }

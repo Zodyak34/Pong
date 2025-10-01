@@ -18,5 +18,11 @@ public class Constants {
 
     public static final double MAX_ANGLE = 45;
 
-    public static final double DIV_WIDTH = 5.0;
+    public static final double DIV_WIDTH = 6.0;
+
+    public static final Color SCORE_COLOR = Color.GREEN;
+
+    public static final double DELAY_TIME = 1000.0;
+
+    public static final int WIN_CON = 10;
 }
