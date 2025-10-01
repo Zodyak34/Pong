@@ -79,8 +79,13 @@ public class Window extends JFrame implements Runnable {
         ballRect.draw(g2);
 
         //Draw Score
-        playerScoreText.draw(g2);
-        aiScoreText.draw(g2);
+        if (playerScoreText.isVisible) {
+            playerScoreText.draw(g2);
+            aiScoreText.draw(g2);
+        } else if (aiScoreText.isVisible) {
+            aiScoreText.draw(g2);
+            playerScoreText.draw(g2);
+        }
     }
 
     public void run() {

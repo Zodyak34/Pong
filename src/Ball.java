@@ -47,6 +47,7 @@ public class Ball {
                 int aiScore = Integer.parseInt(aiScoreText.text);
                 aiScore++;
                 aiScoreText.text = "" + aiScore;
+                aiScoreText.isVisible = true;
 
                 delay = true;
                 delayTime = System.currentTimeMillis();
@@ -76,6 +77,7 @@ public class Ball {
                 int playerScore = Integer.parseInt(playerScoreText.text);
                 playerScore++;
                 playerScoreText.text = "" + playerScore;
+                playerScoreText.isVisible = true;
 
                 delay = true;
                 delayTime = System.currentTimeMillis();
@@ -92,7 +94,6 @@ public class Ball {
         }
 
         if (delay && System.currentTimeMillis() - delayTime >= Constants.DELAY_TIME) {
-            System.out.println("Delay Condition Met");
             this.rect.x = Constants.SCREEN_WIDTH / 2.0;
             this.rect.y = Constants.SCREEN_HEIGHT / 2.0;
 
@@ -100,9 +101,13 @@ public class Ball {
             this.rightPaddle.y = Constants.SCREEN_HEIGHT / 2.0 - Constants.toolBarHeight;
 
             if (scoringPlayer == 1) {
+                playerScoreText.isVisible = false;
+                aiScoreText.isVisible = false;
                 this.vx = -300.0;
                 this.vy = 10.0;
             } else if (scoringPlayer == 2) {
+                playerScoreText.isVisible = false;
+                aiScoreText.isVisible = false;
                 this.vx = 300.0;
                 this.vy = 10.0;
             }
