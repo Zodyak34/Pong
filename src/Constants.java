@@ -24,5 +24,5 @@ public class Constants {
 
     public static final double DELAY_TIME = 1000.0;
 
-    public static final int WIN_CON = 10;
+    public static final int WIN_CON = 1;
 }

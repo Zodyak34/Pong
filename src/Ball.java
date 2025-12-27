@@ -11,6 +11,10 @@ public class Ball {
     public double vy = 10.0;
     public double vx = -300.0;
 
+    //add start delay
+    public boolean gameStarted = false;
+    public double startDelay;
+
     public Ball(Rect rect, Rect leftPaddle, Rect rightPaddle, Text playerScoreText, Text aiScoreText) {
         this.rect = rect;
         this.leftPaddle = leftPaddle;
@@ -19,6 +23,8 @@ public class Ball {
         this.aiScoreText = aiScoreText;
         this.delay = false;
         this.scoringPlayer = 0;
+        this.gameStarted = false;
+        this.startDelay = System.currentTimeMillis();
     }
 
     public double calcNewVeloAngle(Rect paddle) {
@@ -30,6 +36,13 @@ public class Ball {
     }
 
     public void update(double dt) {
+        if (!gameStarted) {
+            if (System.currentTimeMillis() - startDelay >= 2000) {
+                gameStarted = true;
+            } else {
+                return;
+            }
+        }
         if (vx < 0) {
             if (this.rect.x <= this.leftPaddle.x + this.leftPaddle.width &&
                     this.rect.x + this.rect.width >= this.leftPaddle.x &&
@@ -57,8 +70,7 @@ public class Ball {
                 this.vy = 0;
 
                 if (aiScore >= Constants.WIN_CON) {
-                    //TODO: return to main menu and stop game
-                    System.out.println("Computer Wins!");
+                    Main.changeState(0);
                 }
             }
         } else if (vx > 0) {
@@ -87,8 +99,7 @@ public class Ball {
                 this.vy = 0;
 
                 if (playerScore >= Constants.WIN_CON) {
-                    //TODO: return to main menu and stop game
-                    System.out.println("You win!");
+                    Main.changeState(0);
                 }
             }
         }

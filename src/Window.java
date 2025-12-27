@@ -2,7 +2,6 @@ import javax.swing.JFrame;
 import java.awt.*;
 
 public class Window extends JFrame implements Runnable {
-    public Graphics2D g2;
     public KL keyListener = new KL();
     public Rect playerOne, ai, ballRect, divider;
     public PlayerController pc;
@@ -10,6 +9,7 @@ public class Window extends JFrame implements Runnable {
     public Ball ball;
     public Text playerScoreText, aiScoreText, hyphen;
     public int playerScore, aiScore;
+    public boolean isRunning = true;
 
     //Default Constructor
     public Window() {
@@ -19,9 +19,6 @@ public class Window extends JFrame implements Runnable {
         this.setResizable(false);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Graphics Object Value
-        g2 = (Graphics2D)this.getGraphics();
 
         //Key Listener Value
         this.addKeyListener(keyListener);
@@ -37,9 +34,11 @@ public class Window extends JFrame implements Runnable {
         playerScore = 0;
         aiScore = 0;
         playerScoreText = new Text(playerScore, new Font("Arial", Font.BOLD, 50),
-                Constants.SCREEN_WIDTH - (Constants.SCREEN_WIDTH / 2.0) - 78, Constants.SCREEN_HEIGHT / 2.0 + Constants.toolBarHeight);
+                Constants.SCREEN_WIDTH - (Constants.SCREEN_WIDTH / 2.0) - 78, Constants.SCREEN_HEIGHT / 2.0 + Constants.toolBarHeight,
+                Constants.SCORE_COLOR);
         aiScoreText = new Text(aiScore, new Font("Arial", Font.BOLD, 50),
-                Constants.SCREEN_WIDTH - (Constants.SCREEN_WIDTH / 2.0) + 50,Constants.SCREEN_HEIGHT / 2.0 + Constants.toolBarHeight);
+                Constants.SCREEN_WIDTH - (Constants.SCREEN_WIDTH / 2.0) + 50,Constants.SCREEN_HEIGHT / 2.0 + Constants.toolBarHeight,
+                Constants.SCORE_COLOR);
 
         //Paddle Rect Values
         playerOne = new Rect(Constants.HORIZ_PADDING, Constants.SCREEN_HEIGHT / 2.0 - Constants.toolBarHeight,
@@ -57,14 +56,20 @@ public class Window extends JFrame implements Runnable {
     }
 
     public void update(double dt) {
-        Image dbImage = createImage(getWidth(), getHeight());
-        Graphics dbg = dbImage.getGraphics();
-        this.draw(dbg);
-        g2.drawImage(dbImage, 0, 0, this);
 
         pc.update(dt);
         aiController.update(dt);
         ball.update(dt);
+
+        repaint();
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        Image dbImage = createImage(getWidth(), getHeight());
+        Graphics dbg = dbImage.getGraphics();
+        this.draw(dbg);
+        g.drawImage(dbImage, 0, 0, this);
     }
 
     public void draw(Graphics g) {
@@ -90,12 +95,18 @@ public class Window extends JFrame implements Runnable {
 
     public void run() {
         double lastFrameTime = 0.0;
-        while (true) {
+        while (isRunning) {
             double time = Time.getTime();
             double deltaTime = time - lastFrameTime;
             lastFrameTime = time;
 
             update(deltaTime);
         }
+        this.dispose();
+        return;
+    }
+
+    public void stop() {
+        isRunning = false;
     }
 }
