@@ -14,6 +14,7 @@ public class Ball {
     //add start delay
     public boolean gameStarted = false;
     public double startDelay;
+    public int playerScore, aiScore = 0;
 
     public Ball(Rect rect, Rect leftPaddle, Rect rightPaddle, Text playerScoreText, Text aiScoreText) {
         this.rect = rect;
@@ -57,7 +58,7 @@ public class Ball {
                 this.vy = newVy;
 
             } else if (this.rect.x + this.rect.width < this.leftPaddle.x) {
-                int aiScore = Integer.parseInt(aiScoreText.text);
+                aiScore = Integer.parseInt(aiScoreText.text);
                 aiScore++;
                 aiScoreText.text = "" + aiScore;
                 aiScoreText.isVisible = true;
@@ -70,7 +71,7 @@ public class Ball {
                 this.vy = 0;
 
                 if (aiScore >= Constants.WIN_CON) {
-                    Main.changeState(0);
+                    Main.changeState(2);
                 }
             }
         } else if (vx > 0) {
@@ -86,7 +87,7 @@ public class Ball {
                 this.vx = newVx * (-1.0 * oldSign);
                 this.vy = newVy;
             } else if (this.rect.x + this.rect.width > this.rightPaddle.x + this.rightPaddle.width) {
-                int playerScore = Integer.parseInt(playerScoreText.text);
+                playerScore = Integer.parseInt(playerScoreText.text);
                 playerScore++;
                 playerScoreText.text = "" + playerScore;
                 playerScoreText.isVisible = true;
@@ -99,7 +100,7 @@ public class Ball {
                 this.vy = 0;
 
                 if (playerScore >= Constants.WIN_CON) {
-                    Main.changeState(0);
+                    Main.changeState(2);
                 }
             }
         }

@@ -13,6 +13,7 @@ public class Text {
         this.font = font;
         this.x = x;
         this.y = y;
+        this.color = color;
         isVisible = false;
     }
 
